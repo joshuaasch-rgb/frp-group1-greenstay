@@ -1,0 +1,12 @@
+---
+/** Highlighted scope box. */
+---
+<aside class="reveal not-prose my-8 rounded-xl border border-sand-200 bg-linen-100 p-6">
+  <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brass-700">Scope</p>
+  <div class="scope-body mt-3 text-[1rem] leading-relaxed text-charcoal-700"><slot /></div>
+</aside>
+<style>
+  .scope-body :global(ul) { list-style: disc; padding-left: 1.25rem; margin-top: 0.5rem; }
+  .scope-body :global(li + li) { margin-top: 0.35rem; }
+  .scope-body :global(p + p), .scope-body :global(p + ul) { margin-top: 0.75rem; }
+</style>

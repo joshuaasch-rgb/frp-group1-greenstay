@@ -1,0 +1,8 @@
+{
+  "hotelRoom": { "file": "hotel-room.jpg", "alt": "Bright hotel room with a made bed, a small sofa and large windows", "author": "Point3D Commercial Imaging Ltd.", "url": "https://unsplash.com/photos/white-bed-linen-on-bed-5BV56SdvLmo" },
+  "towels": { "file": "towels.jpg", "alt": "Neatly folded white towels on a hotel bed", "author": "Vije Vijendranath", "url": "https://unsplash.com/photos/white-soap-on-white-towel-COp-kDF4RWs" },
+  "trolley": { "file": "housekeeping-trolley.jpg", "alt": "Housekeeping trolley with fresh linen in a long hotel corridor", "author": "Lasse Møller", "url": "https://unsplash.com/photos/black-cart-on-hallway-AvmWoIXv4r4" },
+  "door": { "file": "hotel-door.jpg", "alt": "Hotel room door in a quiet corridor with dark green wall panelling", "author": "Robert | Visual Diary", "url": "https://unsplash.com/photos/a-dark-hotel-hallway-with-two-doors-and-wall-sconces-agsbbAIk_AI" },
+  "greenWall": { "file": "green-wall-lobby.jpg", "alt": "Bright hotel lobby with a large vertical wall of green plants", "author": "eran design", "url": "https://unsplash.com/photos/modern-interior-with-a-large-vertical-green-wall-bkAxpGQjrRY" },
+  "lounge": { "file": "lounge-plants.jpg", "alt": "Sunlit lounge with tables, chairs and tall potted plants", "author": "Tori Wise", "url": "https://unsplash.com/photos/a-room-with-a-table-chairs-and-plants-iM2xseY_fR8" }
+}

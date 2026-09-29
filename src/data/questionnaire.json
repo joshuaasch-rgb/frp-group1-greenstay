@@ -1,0 +1,69 @@
+{
+  "note": "Draft items for discussion with the coach. The wording is inspired by the listed sources and still has to be checked against the original published scales before the survey is finalised. (R) = negatively worded item, recoded before analysis.",
+  "constructs": [
+    {
+      "name": "Environmental concern",
+      "basedOn": "Dunlap et al. (2000); Chen & Tung (2014)",
+      "items": [
+        "I am worried about the state of the environment.",
+        "Humans are seriously damaging the environment.",
+        "I consider the environmental impact of my choices when I travel.",
+        "Protecting the environment is important to me, also when I am on holiday or on a business trip.",
+        "The environmental impact of hotels is exaggerated. (R)"
+      ]
+    },
+    {
+      "name": "Social norms",
+      "basedOn": "Goldstein et al. (2008); Budovska et al. (2020)",
+      "items": [
+        "Most people who are important to me think I should reuse my towels and bed linen in a hotel.",
+        "Most hotel guests take part in hotels' sustainability programmes.",
+        "People like me reuse their towels when they stay in a hotel.",
+        "I feel that others expect me to take part in a hotel's sustainability initiatives."
+      ]
+    },
+    {
+      "name": "Perceived convenience",
+      "basedOn": "Ajzen (1991); Budovska et al. (2020)",
+      "items": [
+        "It is easy for me to reuse my towels and bed linen during a hotel stay.",
+        "It is easy to skip daily housekeeping when a hotel offers this option.",
+        "Sorting my waste in a hotel room takes little effort when separate bins are available.",
+        "Hotels usually explain clearly how I can take part in their sustainability programmes.",
+        "Taking part in hotel sustainability initiatives makes my stay less comfortable. (R)"
+      ]
+    },
+    {
+      "name": "Perceived personal benefits",
+      "basedOn": "Dolnicar et al. (2019); Dimara et al. (2017)",
+      "items": [
+        "I would skip housekeeping more often if I received something in return (e.g., a drink voucher or loyalty points).",
+        "Taking part in a hotel's sustainability programme gives me a personal benefit.",
+        "I feel good about myself when I help a hotel save water and energy.",
+        "When a hotel shares its savings with guests, I am more willing to participate."
+      ]
+    },
+    {
+      "name": "Intention to participate (DV)",
+      "basedOn": "Han et al. (2010); Budovska et al. (2020)",
+      "items": [
+        "During my next hotel stay, I intend to reuse my towels and bed linen.",
+        "During my next hotel stay, I intend to skip daily housekeeping when this option is offered.",
+        "During my next hotel stay, I intend to sort my waste when bins are available.",
+        "I would take part in a sustainability programme offered by a hotel."
+      ]
+    },
+    {
+      "name": "Demographics",
+      "basedOn": "Knezevic Cvelbar et al. (2017); Dimara et al. (2017)",
+      "items": [
+        "Gender",
+        "Age group",
+        "Nationality",
+        "Travel purpose (business / leisure)",
+        "Average length of stay",
+        "Number of hotel stays in the past 12 months"
+      ]
+    }
+  ]
+}

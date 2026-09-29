@@ -1,0 +1,143 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { mdxComponents } from '../components/mdx';
+import { getPhoto } from '../lib/photos';
+import { url } from '../lib/url';
+
+export async function getStaticPaths() {
+  const chapters = (await getCollection('chapters')).sort((a, b) => a.data.order - b.data.order);
+  return chapters.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: chapters[i - 1], next: chapters[i + 1] },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry);
+const { title, number, lead, status, statusLabel, photo, toc } = entry.data;
+const sections = headings.filter((h) => h.depth === 2);
+const image = photo ? getPhoto(photo) : undefined;
+const showToc = toc && sections.length > 1;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<BaseLayout title={title} description={lead}>
+  <!-- Chapter header -->
+  <section class="relative overflow-hidden border-b border-sand-200 bg-linen-100">
+    <div class="mx-auto grid max-w-7xl items-stretch md:grid-cols-12">
+      <div class="px-5 pb-12 pt-14 md:col-span-7 md:px-8 md:pb-20 md:pt-20 lg:col-span-7">
+        <p class="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-brass-700">
+          {number !== undefined ? <span>Chapter {pad(number)}</span> : <span>Sources</span>}
+          {status && (
+            <span class:list={[
+              'rounded-full px-2.5 py-1 text-[0.68rem] tracking-[0.12em]',
+              status === 'draft' ? 'bg-eucalyptus-100 text-forest-800 ring-1 ring-eucalyptus-300' : 'bg-white text-brass-700 ring-1 ring-sand-300',
+            ]}>{statusLabel}</span>
+          )}
+        </p>
+        <h1 class="mt-5 flex items-baseline gap-4 text-[2.6rem] leading-[1.05] sm:text-5xl lg:text-6xl">
+          {number !== undefined && <span class="font-serif text-brass-500" aria-hidden="true">{number}.</span>}
+          <span>{title}</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-charcoal-700">{lead}</p>
+      </div>
+      {image && (
+        <div class="relative hidden md:col-span-5 md:block">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            widths={[480, 800, 1100]}
+            sizes="(min-width: 1280px) 530px, 42vw"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="eager"
+            fetchpriority="high"
+          />
+          <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-linen-100 to-transparent" aria-hidden="true" />
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Body -->
+  <div class="mx-auto max-w-7xl px-5 pt-12 md:px-8 md:pt-16">
+    <div class:list={['grid grid-cols-[minmax(0,1fr)] gap-10', showToc && 'lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-16']}>
+      {showToc && (
+        <aside class="lg:order-none">
+          <details class="group rounded-xl border border-sand-200 bg-white lg:hidden">
+            <summary class="flex cursor-pointer list-none items-center justify-between px-5 py-4 text-sm font-semibold text-forest-900">
+              On this page
+              <svg class="h-4 w-4 transition-transform group-open:rotate-180" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m5 8 5 5 5-5" /></svg>
+            </summary>
+            <ol class="space-y-1 border-t border-sand-200 px-3 py-3 text-[0.92rem]">
+              {sections.map((h) => (
+                <li><a href={`#${h.slug}`} class="block rounded px-2 py-1.5 text-charcoal-700 hover:bg-linen-100 hover:text-forest-900">{h.text}</a></li>
+              ))}
+            </ol>
+          </details>
+
+          <nav aria-label="On this page" class="toc sticky top-28 hidden lg:block">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brass-700">On this page</p>
+            <ol class="mt-4 space-y-0.5 border-l border-sand-200 text-[0.9rem]">
+              {sections.map((h) => (
+                <li>
+                  <a
+                    href={`#${h.slug}`}
+                    data-toc={h.slug}
+                    class="-ml-px block border-l-2 border-transparent py-1.5 pl-4 leading-snug text-charcoal-500 transition-colors hover:text-forest-900"
+                  >{h.text}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </aside>
+      )}
+
+      <article class:list={['prose-chapter min-w-0', !showToc && 'mx-auto w-full']}>
+        <Content components={mdxComponents} />
+      </article>
+    </div>
+
+    <!-- Previous / next -->
+    <nav aria-label="Chapters" class="mx-auto mt-20 grid max-w-5xl gap-4 border-t border-sand-200 pt-10 sm:grid-cols-2">
+      {prev ? (
+        <a href={url(`${prev.id}/`)} class="group rounded-xl border border-sand-200 bg-white p-5 transition hover:border-eucalyptus-300 hover:shadow-sm">
+          <span class="text-xs font-semibold uppercase tracking-[0.16em] text-charcoal-500">← Previous</span>
+          <span class="mt-1 block font-serif text-xl text-forest-900 group-hover:text-forest-700">{prev.data.title}</span>
+        </a>
+      ) : (
+        <a href={url()} class="group rounded-xl border border-sand-200 bg-white p-5 transition hover:border-eucalyptus-300 hover:shadow-sm">
+          <span class="text-xs font-semibold uppercase tracking-[0.16em] text-charcoal-500">← Back to</span>
+          <span class="mt-1 block font-serif text-xl text-forest-900">Home</span>
+        </a>
+      )}
+      {next && (
+        <a href={url(`${next.id}/`)} class="group rounded-xl border border-sand-200 bg-white p-5 text-right transition hover:border-eucalyptus-300 hover:shadow-sm sm:col-start-2">
+          <span class="text-xs font-semibold uppercase tracking-[0.16em] text-charcoal-500">Next →</span>
+          <span class="mt-1 block font-serif text-xl text-forest-900 group-hover:text-forest-700">{next.data.title}</span>
+        </a>
+      )}
+    </nav>
+  </div>
+</BaseLayout>
+
+<script>
+  // Highlight the current section in the sticky table of contents.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc a[data-toc]')];
+  if (links.length) {
+    const targets = links
+      .map((a) => document.getElementById(a.dataset.toc!))
+      .filter((el): el is HTMLElement => !!el);
+    const setActive = () => {
+      let current = targets[0];
+      for (const t of targets) if (t.getBoundingClientRect().top < 140) current = t;
+      for (const a of links) {
+        if (a.dataset.toc === current?.id) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
+      }
+    };
+    setActive();
+    addEventListener('scroll', setActive, { passive: true });
+  }
+</script>

@@ -1,0 +1,179 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import home from '../data/home.json';
+import site from '../data/site.json';
+import { getPhoto } from '../lib/photos';
+import { url } from '../lib/url';
+
+const hero = getPhoto('hotelRoom');
+const abstractPhoto = getPhoto('towels');
+const contactPhoto = getPhoto('greenWall');
+const chapters = (await getCollection('chapters')).sort((a, b) => a.data.order - b.data.order);
+const avatarTints = ['bg-eucalyptus-100 text-forest-800', 'bg-sand-200 text-brass-700', 'bg-forest-800 text-linen-50', 'bg-linen-100 text-forest-800', 'bg-eucalyptus-300 text-forest-900'];
+const initials = (name: string) =>
+  name.split(' ').map((p) => p[0]).filter((_, i, arr) => i === 0 || i === arr.length - 1).join('');
+---
+
+<BaseLayout description={home.summary}>
+  <!-- Hero -->
+  <section class="relative isolate overflow-hidden bg-forest-900">
+    <Image
+      src={hero.src}
+      alt={hero.alt}
+      widths={[640, 1024, 1600, 2000]}
+      sizes="100vw"
+      class="absolute inset-0 -z-10 h-full w-full object-cover"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-r from-forest-950/90 via-forest-900/80 to-forest-900/60 md:via-forest-900/70 md:to-forest-900/20" aria-hidden="true" />
+    <div class="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-forest-950/50 to-transparent" aria-hidden="true" />
+
+    <div class="mx-auto max-w-7xl px-5 pb-36 pt-24 md:px-8 md:pb-48 md:pt-36">
+      <div class="max-w-3xl">
+        <p class="text-balance text-xs font-semibold uppercase tracking-[0.16em] text-brass-500 sm:tracking-[0.22em]">{home.eyebrow}</p>
+        <h1 class="mt-6 text-[2.6rem] leading-[1.04] text-linen-50 sm:text-6xl lg:text-7xl">{home.title}</h1>
+        <p class="mt-7 max-w-2xl text-lg leading-relaxed text-linen-100/90 md:text-xl">{home.summary}</p>
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a
+            href={url('introduction/#12-problem-statement')}
+            class="inline-flex items-center gap-2 rounded-full bg-linen-50 px-6 py-3.5 text-sm font-semibold text-forest-900 transition hover:bg-white"
+          >
+            Read the problem
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+          </a>
+          <a
+            href={url('theoretical-framework/#28-conceptual-model')}
+            class="inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold text-linen-50 ring-1 ring-inset ring-linen-50/50 transition hover:bg-white/10 hover:ring-linen-50"
+          >
+            Our conceptual model
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key figures -->
+  <section aria-labelledby="figures-title" class="relative z-10 mx-auto -mt-24 max-w-7xl px-5 md:-mt-28 md:px-8">
+    <h2 id="figures-title" class="sr-only">Key figures</h2>
+    <div class="grid overflow-hidden rounded-2xl border border-sand-200 bg-white shadow-[0_24px_60px_-30px_rgba(17,37,27,0.35)] md:grid-cols-3">
+      {home.keyFigures.map((f, i) => (
+        <div class:list={['reveal flex flex-col p-7 md:p-9', i > 0 && 'border-t border-sand-200 md:border-l md:border-t-0']} style={`transition-delay:${i * 90}ms`}>
+          <p class="font-serif text-5xl leading-none text-forest-800 md:text-[3.4rem]">{f.value}</p>
+          <p class="mt-4 flex-1 text-[0.98rem] leading-relaxed text-charcoal-700">{f.label}</p>
+          <p class="mt-5 text-xs font-medium text-brass-700">{f.source}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section aria-labelledby="abstract-title" class="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
+    <div class="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="reveal lg:col-span-7">
+        <div class="flex flex-wrap items-center gap-3">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brass-700">Abstract</p>
+          <span class="rounded-full bg-eucalyptus-100 px-3 py-1 text-xs font-medium text-forest-800 ring-1 ring-eucalyptus-300">{home.abstractNote}</span>
+        </div>
+        <h2 id="abstract-title" class="mt-5 text-3xl leading-tight md:text-[2.6rem]">From good intentions to participation</h2>
+        <div class="mt-8 space-y-5 text-[1.05rem] leading-[1.8] text-charcoal-700">
+          {home.abstract.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+      <div class="reveal lg:col-span-5">
+        <div class="relative">
+          <Image
+            src={abstractPhoto.src}
+            alt={abstractPhoto.alt}
+            widths={[480, 800, 1000]}
+            sizes="(min-width: 1024px) 460px, 100vw"
+            class="aspect-[4/5] w-full rounded-2xl object-cover"
+          />
+          <div class="absolute -bottom-5 -left-5 -z-10 hidden h-24 w-24 rounded-2xl border border-brass-500/50 sm:block" aria-hidden="true" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chapters -->
+  <section aria-labelledby="chapters-title" class="border-y border-sand-200 bg-linen-100">
+    <div class="mx-auto max-w-7xl px-5 py-24 md:px-8">
+      <div class="reveal max-w-2xl">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brass-700">The report</p>
+        <h2 id="chapters-title" class="mt-4 text-3xl leading-tight md:text-[2.6rem]">Explore the research, chapter by chapter</h2>
+      </div>
+      <ol class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {chapters.map((c, i) => (
+          <li class="reveal" style={`transition-delay:${(i % 3) * 70}ms`}>
+            <a href={url(`${c.id}/`)} class="group flex h-full flex-col rounded-2xl border border-sand-200 bg-white p-6 transition hover:-translate-y-0.5 hover:border-eucalyptus-300 hover:shadow-[0_16px_40px_-24px_rgba(17,37,27,0.4)]">
+              <div class="flex items-center justify-between gap-3">
+                <span class="font-serif text-2xl text-brass-700">{c.data.number !== undefined ? String(c.data.number).padStart(2, '0') : 'APA'}</span>
+                {c.data.statusLabel && <span class="text-[0.7rem] font-medium uppercase tracking-[0.12em] text-charcoal-500">{c.data.statusLabel}</span>}
+              </div>
+              <h3 class="mt-4 text-xl text-forest-900">{c.data.title}</h3>
+              <p class="mt-2 flex-1 text-[0.95rem] leading-relaxed text-charcoal-700">{c.data.lead}</p>
+              <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-forest-700">
+                Read chapter
+                <svg class="h-4 w-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" /></svg>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section aria-labelledby="team-title" class="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
+    <div class="reveal max-w-2xl">
+      <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brass-700">{site.group}</p>
+      <h2 id="team-title" class="mt-4 text-3xl leading-tight md:text-[2.6rem]">Meet the team</h2>
+      <p class="mt-4 text-[1.05rem] leading-relaxed text-charcoal-700">
+        Five students of {site.university}, working on {site.course}.
+      </p>
+    </div>
+    <ul class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      {site.members.map((name, i) => (
+        <li class="reveal flex flex-col items-center rounded-2xl border border-sand-200 bg-white px-4 py-8 text-center" style={`transition-delay:${i * 60}ms`}>
+          <span class:list={['flex h-20 w-20 items-center justify-center rounded-full font-serif text-2xl ring-1 ring-sand-300 ring-offset-4 ring-offset-white', avatarTints[i % avatarTints.length]]} aria-hidden="true">{initials(name)}</span>
+          <p class="mt-5 font-medium leading-snug text-forest-900">{name}</p>
+        </li>
+      ))}
+    </ul>
+    <div class="reveal mt-4 flex flex-col items-start gap-4 rounded-2xl bg-forest-800 px-6 py-6 text-linen-100 sm:flex-row sm:items-center sm:px-8">
+      <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-forest-700 font-serif text-lg text-linen-50 ring-1 ring-brass-500/60" aria-hidden="true">{initials(site.coach)}</span>
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brass-500">Research coach</p>
+        <p class="mt-1 font-serif text-xl">{site.coach}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section aria-labelledby="contact-title" class="mx-auto max-w-7xl px-5 md:px-8">
+    <div class="reveal grid overflow-hidden rounded-3xl bg-forest-900 md:grid-cols-2">
+      <div class="px-7 py-12 md:px-12 md:py-16">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brass-500">Contact</p>
+        <h2 id="contact-title" class="mt-4 text-3xl leading-tight text-linen-50 md:text-4xl">Find us at Hanze</h2>
+        <address class="mt-8 space-y-1 text-lg not-italic leading-relaxed text-sand-300">
+          <span class="block font-medium text-linen-50">{site.university}</span>
+          {site.address.map((line) => <span class="block">{line}</span>)}
+        </address>
+        <p class="mt-8 text-sm leading-relaxed text-sand-300/80">
+          {site.group} · {site.course} · {site.topic}
+        </p>
+      </div>
+      <div class="relative min-h-64">
+        <Image
+          src={contactPhoto.src}
+          alt={contactPhoto.alt}
+          widths={[480, 800, 1100]}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

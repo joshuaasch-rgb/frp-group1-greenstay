@@ -1,0 +1,28 @@
+{
+  "eyebrow": "Flexible Research Project 2026–2027 · Topic 2",
+  "title": "Encouraging hotel guests to take part in sustainable practices",
+  "summary": "Hotels offer towel reuse, the option to skip daily cleaning and waste sorting in the room. These only save water and energy if guests take part. We study what makes guests in Dutch hotels willing to join in, and what hotels can do about it.",
+  "keyFigures": [
+    {
+      "value": "1.5 kWh",
+      "label": "of electricity, plus 35 L of water and 100 ml of chemicals, for one routine room clean",
+      "source": "Knezevic Cvelbar et al., 2021"
+    },
+    {
+      "value": "93%",
+      "label": "of travellers say they want to make more sustainable choices when they travel",
+      "source": "Booking.com, 2025"
+    },
+    {
+      "value": "−42%",
+      "label": "room cleans when a hotel gave guests a drink voucher for each skipped clean",
+      "source": "Dolnicar et al., 2019"
+    }
+  ],
+  "abstractNote": "Working abstract, updated in week 7",
+  "abstract": [
+    "Hotels in the Netherlands invest in sustainability initiatives that depend on their guests, such as towel and linen reuse, opt-out housekeeping and waste sorting. Participation often remains low. Travellers say sustainability matters to them, but this does not always show during a hotel stay, and messages that only appeal to environmental values have little effect.",
+    "This study looks at four factors that may explain guests' intention to take part: environmental concern, social norms, perceived convenience and perceived personal benefits. It builds on an extended Theory of Planned Behaviour. We will combine an online survey among guests who stayed in a Dutch hotel in the past 12 months with interviews with hotel professionals.",
+    "The goal is to give hotel managers evidence-based and implementable advice on communication, behavioural nudges and reward programmes, including an action plan, time plan and budget."
+  ]
+}

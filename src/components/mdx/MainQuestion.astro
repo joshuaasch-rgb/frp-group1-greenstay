@@ -1,0 +1,13 @@
+---
+/** Highlighted main research question. */
+interface Props { label?: string }
+const { label = 'Main research question' } = Astro.props;
+---
+
+<div class="reveal not-prose relative my-10 overflow-hidden rounded-2xl bg-forest-800 px-6 py-8 text-linen-100 sm:px-10 sm:py-10 sm:pr-24">
+  <svg class="absolute -bottom-14 -right-10 h-44 w-44 text-forest-700/70" viewBox="0 0 100 100" aria-hidden="true">
+    <path d="M18 78C18 42 44 20 84 16c-2 40-26 62-60 62" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+  </svg>
+  <p class="relative text-xs font-semibold uppercase tracking-[0.18em] text-brass-500">{label}</p>
+  <p class="relative mt-4 font-serif text-[1.35rem] leading-snug sm:text-[1.6rem]"><slot /></p>
+</div>

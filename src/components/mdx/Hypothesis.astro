@@ -1,0 +1,10 @@
+---
+/** Highlighted hypothesis. Usage: <Hypothesis id="H1">Text…</Hypothesis> */
+interface Props { id: string }
+const { id } = Astro.props;
+---
+
+<div class="reveal not-prose my-8 flex gap-4 rounded-xl border-l-4 border-brass-500 bg-eucalyptus-100/60 px-5 py-5 sm:gap-5 sm:px-6">
+  <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest-800 font-serif text-base text-linen-100">{id}</span>
+  <p class="self-center font-serif text-[1.15rem] leading-snug text-forest-900 sm:text-[1.25rem]"><slot /></p>
+</div>

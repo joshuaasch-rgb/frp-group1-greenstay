@@ -1,0 +1,101 @@
+---
+import Logo from './Logo.astro';
+import { nav } from '../lib/nav';
+import { url } from '../lib/url';
+
+const current = Astro.url.pathname.replace(/\/$/, '').split('/').pop();
+---
+
+<header class="sticky top-0 z-50 border-b border-sand-200/80 bg-linen-50/90 backdrop-blur-md supports-[backdrop-filter]:bg-linen-50/75">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded focus:bg-forest-800 focus:px-4 focus:py-2 focus:text-white">
+    Skip to content
+  </a>
+  <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-5 md:h-[4.5rem] md:px-8">
+    <a href={url()} class="rounded-sm" aria-label="GreenStay Consultancy – home">
+      <Logo />
+    </a>
+
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex items-center gap-1 text-[0.9rem] font-medium">
+        {nav.map((item) => {
+          const active = current === item.slug;
+          return (
+            <li>
+              <a
+                href={url(`${item.slug}/`)}
+                aria-current={active ? 'page' : undefined}
+                class:list={[
+                  'relative whitespace-nowrap rounded-md px-2.5 py-2 transition-colors xl:px-3',
+                  active ? 'text-forest-900' : 'text-charcoal-700 hover:text-forest-800',
+                ]}
+              >
+                <span class="2xl:hidden">{item.short ?? item.label}</span>
+                <span class="hidden 2xl:inline">{item.label}</span>
+                {active && <span class="absolute inset-x-2.5 -bottom-[0.9rem] h-0.5 bg-brass-500 xl:inset-x-3" aria-hidden="true" />}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    <button
+      type="button"
+      id="menu-toggle"
+      class="inline-flex h-11 w-11 items-center justify-center rounded-md text-forest-900 hover:bg-sand-200/60 lg:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="sr-only">Open menu</span>
+      <svg class="menu-open h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+      <svg class="menu-close hidden h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6 6 18" />
+      </svg>
+    </button>
+  </div>
+
+  <nav id="mobile-menu" aria-label="Main (mobile)" class="hidden border-t border-sand-200 bg-linen-50 lg:hidden">
+    <ul class="mx-auto max-w-7xl px-5 py-3">
+      <li>
+        <a href={url()} class="block rounded-md px-3 py-3 text-base font-medium text-charcoal-700 hover:bg-sand-200/50">Home</a>
+      </li>
+      {nav.map((item) => (
+        <li>
+          <a
+            href={url(`${item.slug}/`)}
+            aria-current={current === item.slug ? 'page' : undefined}
+            class:list={[
+              'block rounded-md px-3 py-3 text-base font-medium hover:bg-sand-200/50',
+              current === item.slug ? 'bg-eucalyptus-100 text-forest-900' : 'text-charcoal-700',
+            ]}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      menu.classList.toggle('hidden', !open);
+      toggle.querySelector('.menu-open')?.classList.toggle('hidden', open);
+      toggle.querySelector('.menu-close')?.classList.toggle('hidden', !open);
+      toggle.querySelector('.sr-only')!.textContent = open ? 'Close menu' : 'Open menu';
+    };
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>

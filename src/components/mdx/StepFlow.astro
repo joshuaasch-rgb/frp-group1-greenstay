@@ -1,0 +1,17 @@
+---
+/** Numbered process steps. Usage: <StepFlow steps={["Step one", "Step two"]} /> */
+interface Props { steps: string[] }
+const { steps } = Astro.props;
+---
+
+<ol class="wide not-prose my-10 grid gap-0 md:grid-cols-5 md:gap-4">
+  {steps.map((step, i) => (
+    <li class="reveal relative flex gap-4 pb-8 md:flex-col md:gap-3 md:pb-0" style={`transition-delay:${i * 80}ms`}>
+      {i < steps.length - 1 && (
+        <span class="absolute left-5 top-11 h-[calc(100%-2.75rem)] w-px bg-sand-300 md:left-12 md:top-5 md:h-px md:w-[calc(100%-2rem)]" aria-hidden="true" />
+      )}
+      <span class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brass-500 bg-linen-50 font-serif text-forest-900">{i + 1}</span>
+      <span class="pt-2 text-[0.95rem] leading-snug text-charcoal-700 md:pt-0">{step}</span>
+    </li>
+  ))}
+</ol>

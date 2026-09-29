@@ -1,0 +1,30 @@
+{
+  "booking": {
+    "title": "Travellers' attitudes towards sustainable travel",
+    "bars": [
+      { "label": "Say sustainable travel is important", "value": 84 },
+      { "label": "Want to make more sustainable choices", "value": 93 }
+    ],
+    "unit": "% of travellers",
+    "source": "Booking.com (2025), n = 32,000 travellers in 34 countries and territories."
+  },
+  "goldstein": {
+    "title": "Towel reuse by type of message on the room card",
+    "bars": [
+      { "label": "Standard environmental message", "value": 35 },
+      { "label": "\"Most guests reuse their towels\"", "value": 44 },
+      { "label": "\"Most guests in this room reuse their towels\"", "value": 49 }
+    ],
+    "unit": "% of guests who reused their towels",
+    "source": "Goldstein et al. (2008), field experiment in a US hotel."
+  },
+  "cleaning": {
+    "title": "Share of rooms cleaned: default vs. on request",
+    "bars": [
+      { "label": "Cleaning by default (opt-out)", "value": 89 },
+      { "label": "Cleaning on request (opt-in)", "value": 32 }
+    ],
+    "unit": "% of rooms cleaned",
+    "source": "Knezevic Cvelbar et al. (2021), field experiment in a Slovenian hotel. Values are approximate."
+  }
+}
